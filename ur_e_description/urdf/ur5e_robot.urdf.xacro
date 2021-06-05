@@ -3,23 +3,38 @@
        name="ur5e" >
 
   <!-- common stuff -->
-  <xacro:include filename="$(find ur_e_description)/urdf/common.gazebo.xacro" />
+  <!-- <xacro:include filename="$(find ur_e_description)/urdf/common.gazebo.xacro" /> -->
 
   <!-- ur5e -->
   <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" />
 
   <!-- arm -->
   <xacro:arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
-  <xacro:ur5e_robot prefix="" joint_limited="false"
+  <xacro:ur5e_robot prefix="ur5e_" joint_limited="false"
     kinematics_file="${load_yaml('$(arg kinematics_config)')}"
     />
 
-  <link name="world" />
+  <!--link name="world" />
 
   <joint name="world_joint" type="fixed">
     <parent link="world" />
     <child link = "base_link" />
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
-  </joint>
+  </joint-->
+
+  <!-- robotiq 85 gripper xacro -->
+  <xacro:include filename="$(find robotiq_85_description)/urdf/robotiq_85_gripper.urdf.xacro" />
+
+  <xacro:robotiq_85_gripper prefix="" parent="ur5e_ee_link" >
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:robotiq_85_gripper>
+
+  <!--link name="graps_link"/>
+
+  <joint name="graps_link_joint" type="fixed">
+    <parent link="wrist_3_link"/>
+    <child link="graps_link"/>
+    <origin xyz="0 0 0.12" rpy="0 0 0"/>
+  </joint-->
 
 </robot>
