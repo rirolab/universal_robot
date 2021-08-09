@@ -21,7 +21,7 @@
         </xacro:robotiq_85_gripper>
 
         <!-- Gripper cancle topic -->
-        <xacro:arg name="cancle_topic" default="$(optenv ROBOT_ID robot)/gripper_controller/gripper_cmd/cancel"/>
+        <xacro:arg name="cancle_topic" default="${gripper_prefix}/gripper_controller/gripper_cmd/cancel"/>
 
         <!-- Gazebo grasping plugin -->
         <gazebo>
