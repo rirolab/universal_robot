@@ -46,16 +46,18 @@
         <palm_link> gripper_finger2_inner_knuckle_link </palm_link>
         <gripper_link> gripper_finger1_finger_tip_link </gripper_link>
         <gripper_link> gripper_finger2_finger_tip_link </gripper_link>
+        <!-- <gripper_link> gripper_finger1_inner_knuckle_link </gripper_link> -->
+        <!-- <gripper_link> gripper_finger2_inner_knuckle_link </gripper_link> -->
       </arm>
       <forces_angle_tolerance>90</forces_angle_tolerance>
       <update_rate>50</update_rate>
       <grip_count_threshold>0</grip_count_threshold>
-      <max_grip_count>60</max_grip_count>
-      <release_tolerance>0.015</release_tolerance>
-      <disable_collisions_on_attach>true</disable_collisions_on_attach>
+      <max_grip_count>20</max_grip_count>
+      <release_tolerance>0.15</release_tolerance>
+      <disable_collisions_on_attach>false</disable_collisions_on_attach>
       <contact_topic>__default_topic__</contact_topic>
       <!-- Hardcoding... -->
-      <cancel_topic> robot/gripper_controller/gripper_cmd/cancel </cancel_topic>
+      <cancel_topic> /robot/gripper_controller/gripper_cmd/cancel </cancel_topic>
     </plugin>
   </gazebo>
   
