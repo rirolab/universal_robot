@@ -1,64 +1,50 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://ros.org/wiki/xacro"
-       name="ur5e" >
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="ur5e" >
 
-  <!-- common stuff -->
-  <!-- <xacro:include filename="$(find ur_e_description)/urdf/common.gazebo.xacro" /> -->
+    <!-- ur5e -->
+    <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" />
 
-  <!-- ur5e -->
-  <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" />
+    <!-- robotiq 85 gripper xacro -->
+    <xacro:include filename="$(find robotiq_85_description)/urdf/robotiq_85_gripper.urdf.xacro" />
 
-  <!-- arm -->
-  <xacro:arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
-  <xacro:ur5e_robot prefix="ur5e_" joint_limited="false"
-    kinematics_file="${load_yaml('$(arg kinematics_config)')}"
-    />
+    <!-- macro -->
+    <xacro:macro name="ur5e_with_2f85" params="arm_prefix:=robot_ur5e_ gripper_prefix:=robot_">
+        <!-- arm -->
+        <xacro:arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
+        <xacro:ur5e_robot prefix="${arm_prefix}" joint_limited="false"
+            kinematics_file="${load_yaml('$(arg kinematics_config)')}"
+        />
 
-  <!--link name="world" />
+        <!-- robotiq 85 gripper xacro -->
+        <xacro:robotiq_85_gripper prefix="${gripper_prefix}" parent="${arm_prefix}ee_link">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:robotiq_85_gripper>
 
-  <joint name="world_joint" type="fixed">
-    <parent link="world" />
-    <child link = "base_link" />
-    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
-  </joint-->
+        <!-- Gripper cancle topic -->
+        <xacro:arg name="cancle_topic" default="${gripper_prefix[:-1]}/gripper_controller/gripper_cmd/cancel"/>
 
-  <!-- robotiq 85 gripper xacro -->
-  <xacro:include filename="$(find robotiq_85_description)/urdf/robotiq_85_gripper.urdf.xacro" />
+        <!-- Gazebo grasping plugin -->
+        <gazebo>
+            <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
+                <arm>
+                    <arm_name>robotiq_85_gripper</arm_name>
+                    <palm_link> ${gripper_prefix}gripper_finger1_inner_knuckle_link </palm_link>
+                    <palm_link> ${gripper_prefix}gripper_finger2_inner_knuckle_link </palm_link>
+                    <gripper_link> ${gripper_prefix}gripper_finger1_finger_tip_link </gripper_link>
+                    <gripper_link> ${gripper_prefix}gripper_finger2_finger_tip_link </gripper_link>
+                </arm>
+                <forces_angle_tolerance>90</forces_angle_tolerance>
+                <update_rate>50</update_rate>
+                <grip_count_threshold>0</grip_count_threshold>
+                <max_grip_count>60</max_grip_count>
+                <release_tolerance>0.015</release_tolerance>
+                <disable_collisions_on_attach>true</disable_collisions_on_attach>
+                <contact_topic>__default_topic__</contact_topic>
+                <!-- Cancle Topic ... -->
+                <cancel_topic>$(arg cancle_topic)</cancel_topic>
+            </plugin>
+        </gazebo>
 
-  <xacro:robotiq_85_gripper prefix="" parent="ur5e_ee_link" >
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-  </xacro:robotiq_85_gripper>
-
-  <!--link name="graps_link"/>
-
-  <joint name="graps_link_joint" type="fixed">
-    <parent link="wrist_3_link"/>
-    <child link="graps_link"/>
-    <origin xyz="0 0 0.12" rpy="0 0 0"/>
-  </joint-->
-
-  <!-- Gazebo grasping plugin -->
-  <gazebo>
-    <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
-      <arm>
-        <arm_name>robotiq_85_gripper</arm_name>
-        <palm_link> gripper_finger1_inner_knuckle_link </palm_link>
-        <palm_link> gripper_finger2_inner_knuckle_link </palm_link>
-        <gripper_link> gripper_finger1_finger_tip_link </gripper_link>
-        <gripper_link> gripper_finger2_finger_tip_link </gripper_link>
-        <!-- <gripper_link> gripper_finger1_inner_knuckle_link </gripper_link> -->
-        <!-- <gripper_link> gripper_finger2_inner_knuckle_link </gripper_link> -->
-      </arm>
-      <forces_angle_tolerance>90</forces_angle_tolerance>
-      <update_rate>50</update_rate>
-      <grip_count_threshold>0</grip_count_threshold>
-      <max_grip_count>20</max_grip_count>
-      <release_tolerance>0.15</release_tolerance>
-      <disable_collisions_on_attach>false</disable_collisions_on_attach>
-      <contact_topic>__default_topic__</contact_topic>
-      <!-- Hardcoding... -->
-      <cancel_topic> /robot/gripper_controller/gripper_cmd/cancel </cancel_topic>
-    </plugin>
-  </gazebo>
+    </xacro:macro>      
   
 </robot>
