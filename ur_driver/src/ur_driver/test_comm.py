@@ -70,7 +70,7 @@ def __on_packet(buf):
     #gets analog_out[1] state
     inp = state.masterboard_data.analog_output1 / MULT_analog_robotstate
     msg.analog_out_states.append(Analog(1, inp))     
-    #print "Publish IO-Data from robot state data"
+    #print("Publish IO-Data from robot state data")
     pub_io_states.publish(msg)
     
     # Notes: 

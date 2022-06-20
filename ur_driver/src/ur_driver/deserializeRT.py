@@ -14,7 +14,7 @@ class RobotStateRT(object):
         elif plen == 1044:
             return RobotStateRT_V30.unpack(buf)
         else:
-            print "RobotStateRT has wrong length: " + str(plen)
+            print("RobotStateRT has wrong length: " + str(plen))
             return rs
 
 #this parses RobotStateRT for versions = v1.5
