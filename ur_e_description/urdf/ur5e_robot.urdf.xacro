@@ -12,8 +12,7 @@
         <!-- arm -->
         <xacro:arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
         <xacro:ur5e_robot prefix="${arm_prefix}" joint_limited="false"
-            kinematics_file="${load_yaml('$(arg kinematics_config)')}"
-        />
+            kinematics_file="${load_yaml('$(arg kinematics_config)')}" />
 
         <!-- robotiq 85 gripper xacro -->
         <xacro:robotiq_85_gripper prefix="${gripper_prefix}" parent="${arm_prefix}ee_link">
@@ -36,8 +35,8 @@
               </arm>
               <forces_angle_tolerance>100</forces_angle_tolerance><!-- disabled in plugin-->
               <update_rate>4</update_rate> <!-- default: 4 -->
-              <grip_count_threshold>2</grip_count_threshold>
-              <max_grip_count>8</max_grip_count>
+              <grip_count_threshold>0.85</grip_count_threshold> <!-- default: 2 -->
+              <max_grip_count>8</max_grip_count> <!-- default: 8 -->
               <release_tolerance>0.0025</release_tolerance> <!-- default: 0.005 -->
               <disable_collisions_on_attach>false</disable_collisions_on_attach>
               <contact_topic>__default_topic__</contact_topic>
