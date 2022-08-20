@@ -340,6 +340,12 @@
         </geometry>
         <origin rpy="0 0 0" xyz="-0.01 0 0"/>
       </collision>
+      <inertial>
+        <mass value="1e-3"/>
+        <inertia ixx="${(1/12)*1e-3*(0.01*0.01+0.01*0.01)}" ixy="0.0" ixz="0.0" 
+          iyy="${(1/12)*1e-3*(0.01*0.01+0.01*0.01)}" iyz="0.0" 
+          izz="${(1/12)*1e-3*(0.01*0.01+0.01*0.01)}"/>
+      </inertial>
     </link>
 
     <xacro:ur_arm_transmission prefix="${prefix}" hw_interface="${transmission_hw_interface}" />
