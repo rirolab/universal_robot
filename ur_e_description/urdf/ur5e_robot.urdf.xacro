@@ -37,8 +37,8 @@
               <update_rate>4</update_rate> <!-- default: 4 -->
               <grip_count_threshold>0.85</grip_count_threshold> <!-- default: 2 -->
               <max_grip_count>8</max_grip_count> <!-- default: 8 -->
-              <release_tolerance>0.0025</release_tolerance> <!-- default: 0.005 -->
-              <disable_collisions_on_attach>false</disable_collisions_on_attach>
+              <release_tolerance>0.01</release_tolerance> <!-- default: 0.005 -->
+              <disable_collisions_on_attach>true</disable_collisions_on_attach>
               <contact_topic>__default_topic__</contact_topic>
               <!-- Cancel Topic ... -->
               <cancel_topic>$(arg cancle_topic)</cancel_topic>
